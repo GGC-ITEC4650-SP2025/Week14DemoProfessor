@@ -7,9 +7,19 @@ public class DieController : MonoBehaviour
 {
     Rigidbody myBod;
     Text pipsTxt;
+    AudioSource myAudio;
+
+    public AudioClip clip1;
+    public AudioClip clip2;
+    private bool stopSoundPlayed = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        myAudio = GetComponent<AudioSource>();
+        myAudio.PlayOneShot(clip1);
+        //myAudio.PlayOneShot(clip2);
         pipsTxt = GameObject.Find("PipsTxt").GetComponent<Text>();
         myBod = GetComponent<Rigidbody>();
         Vector3 kick = new Vector3(
@@ -40,6 +50,10 @@ public class DieController : MonoBehaviour
                 maxY = spotY;
                 pipsTxt.text = "Showing " + spot.name;
             }
+        }
+        if(myBod.velocity == Vector3.zero && stopSoundPlayed == false) {
+            myAudio.PlayOneShot(clip2);
+            stopSoundPlayed = true;
         }
     }
 }
